@@ -4,52 +4,82 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Summarize Tube</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   </head>
-  <body class="flex justify-center p-4 bg-gray-700 h-screen">
+  <body class="bg-gray-700 h-screen">
     <div class="flex flex-col justify-between">
-      <div class="">
-        <div class="flex flex-col gap-2">
-          <img
-            src="./assets/thumbnail.png"
-            alt="Youtube Thumbnail"
-            class="rounded-xl"
-          />
-          <button
-            class="flex items-center justify-center px-3 py-2 bg-indigo-600 rounded-full shadow"
-          >
-            <svg
-              class="h-4 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
+      <div class="p-4">
+        <!-- Video thumbnail with summarized btn -->
+        <div class="py-4">
+          <div class="flex flex-col gap-2">
+            <img
+              src="./assets/thumbnail.png"
+              alt="Youtube Thumbnail"
+              class="rounded-xl"
+              id="thumbnail"
+            />
+            <p class="pb-2 text-lg text-white" id="videoTitle"></p>
+            <button
+              class="flex items-center justify-center px-3 py-2 bg-indigo-600 rounded-full shadow"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-              />
-            </svg>
-            <h3
-              class="text-white text-xs text-center font-semibold leading-4 px-2"
+              <svg
+                class="h-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                />
+              </svg>
+              <h3
+                class="text-white text-xs text-center font-semibold leading-4 p-2"
+              >
+                Summarize Video
+              </h3>
+            </button>
+          </div>
+        </div>
+
+        <!-- chat box -->
+        <div class="w-full flex-grow">
+          <div class="grid pb-4 pl-12">
+            <div
+              class="px-3.5 py-2 bg-gray-800 rounded-xl justify-start items-center inline-flex"
             >
-              Summarize Video
-            </h3>
-          </button>
+              <h5 class="text-white text-sm font-normal leading-snug">
+                Allowing users to download YouTube videos through your Chrome
+                extension?
+              </h5>
+            </div>
+          </div>
+          <div class="grid pb-4 pr-12">
+            <div
+              class="px-3.5 py-2 justify-start items-center gap-3 inline-flex"
+            >
+              <h5 class="text-white text-sm font-normal leading-snug">
+                YouTube’s Terms of Service prohibit downloading content without
+                explicit permission from the content creator, except in certain
+                situations like when YouTube offers the download option via
+                YouTube Premium or for specific content types like YouTube’s
+                offline mode.
+              </h5>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- chat -->
-      <div
-        class="w-full pl-3 pr-1 py-1 rounded-3xl border border-gray-200 items-center gap-2 inline-flex justify-between"
-      >
-        <input
-          class="grow shrink basis-0 text-black text-xs font-medium leading-4 focus:outline-none"
-          placeholder="Chat here..."
-        />
-        <div class="flex items-center gap-2">
+      <!-- chat send -->
+      <div class="w-full fixed z-10 bottom-0 bg-gray-700 py-4">
+        <div class="flex flex-row justify-between gap-2 mx-2">
+          <input
+            class="w-full px-4 text-white text-xs font-medium bg-gray-800 border border-gray-200 rounded-full focus:outline-none"
+            placeholder="Chat here..."
+          />
           <button
             class="items-center flex px-3 py-2 bg-indigo-600 rounded-full shadow"
           >
@@ -75,7 +105,9 @@
             </h3>
           </button>
         </div>
-      </div>
+      </div>      
     </div>
+
+    <script src="./src/popup.js"></script>
   </body>
 </html>

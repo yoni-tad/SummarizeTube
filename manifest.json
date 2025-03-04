@@ -1,22 +1,27 @@
 {
-    "manifest_version": 3,
-    "name": "SummarizeTube",
-    "version": "1.0.0",
-    "description": "Summarizes & explains YouTube content.",
-    "background": {
-        "service_worker": "service-worker.js"
-    },
-    ""
-    "permissions": ["sidePanel", "tabs"],
-    "commands": {
-        "_execute_action": {
-            "suggested_key": {
-                "default": "Ctrl+Y",
-                "mac": "Command+Y"
-            }
-        }
-    },
-    "action": {
-        "default_icon": "assets/logo.png"
+  "manifest_version": 3,
+  "name": "SummarizeTube",
+  "version": "1.0.0",
+  "description": "Summarizes & explains YouTube content.",
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "permissions": ["sidePanel", "tabs", "storage"],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Y",
+        "mac": "Command+Y"
+      }
     }
+  },
+  "action": {
+    "default_icon": "assets/logo.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch*"],
+      "js": ["src/content.js"]
+    }
+  ]
 }
