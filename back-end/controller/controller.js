@@ -4,6 +4,7 @@ const { YoutubeTranscript } = require("youtube-transcript");
 dotenv.config();
 
 exports.VideoSummarize = async (req, res) => {
+  console.log('🔔 API called');
   const apiKey = process.env.GEMINI_API_KEY;
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({model: 'gemini-1.5-flash'});

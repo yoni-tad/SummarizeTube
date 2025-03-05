@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "SummarizeTube",
   "version": "1.0.0",
-  "description": "Summarizes & explains YouTube content.",
+  "description": "Summarize YouTube videos with a single click.",
   "background": {
     "service_worker": "src/background.js"
   },
@@ -16,7 +16,16 @@
     }
   },
   "action": {
-    "default_icon": "assets/logo.png"
+    "default_icon": {
+      "16": "assets/logo.png",
+      "48": "assets/logo.png",
+      "128": "assets/logo.png"
+    }
+  },
+  "icons": {
+    "16": "assets/logo.png",
+    "48": "assets/logo.png",
+    "128": "assets/logo.png"
   },
   "content_scripts": [
     {
