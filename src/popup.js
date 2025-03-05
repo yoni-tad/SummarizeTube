@@ -1,47 +1,53 @@
 chrome.storage.local.get("videoDetails", (data) => {
   if (data.videoDetails) {
-    document.getElementById("thumbnail").src = data.videoDetails.thumbnailUrl;
-    document.getElementById("videoTitle").innerText =
-      data.videoDetails.videoTitle;
-
-    const summarizeBtn = document.getElementById("summarizeBtn");
-    const summaryResult = document.getElementById("summaryResult");
-
-    summarizeBtn.addEventListener("click", () => {
-      if (summarizeBtn.innerText === "Copy") {
-        const summaryText = summarizeBtn.getAttribute("data-summary");
-        if (summaryText) {
-          navigator.clipboard
-            .writeText(summaryText)
-            .then(() => {
-              summarizeBtn.classList.add("text-white");
-              summarizeBtn.innerText = "Copied";
-              setTimeout(() => {
-                summarizeBtn.classList.add("text-white");
-                summarizeBtn.innerHTML = `${copyIcon()} Copy`;
-              }, 2000);
-            })
-            .catch((error) => {
-              console.error("Error copying text: ", error);
-            });
-        }
-      } else {
-        summarizeBtn.disabled = true;
-        summarizeBtn.classList.add("text-white");
-        summarizeBtn.innerText = "Loading...";
-
-        const videoTitle = data.videoDetails.videoTitle;
-        const videoUrl = data.videoDetails.videoUrl;
-
-        fetchData(videoTitle, videoUrl, summarizeBtn, summaryResult);
-      }
-    });
+    updateUI(data.videoDetails);
   } else {
     console.log("No video data found!");
   }
 });
 
-function fetchData(videoTitle, videoUrl, summarizeBtn, summaryResult) {
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  if (namespace === "local" && changes.videoDetails) {
+    updateUI(changes.videoDetails.newValue);
+  }
+});
+
+function updateUI(videoDetails) {
+  document.getElementById("thumbnail").src = videoDetails.thumbnailUrl;
+
+  const summarizeBtn = document.getElementById("summarizeBtn");
+  const summaryResult = document.getElementById("summaryResult");
+
+  summarizeBtn.addEventListener("click", () => {
+    if (summarizeBtn.innerText === "Copy") {
+      const summaryText = summarizeBtn.getAttribute("data-summary");
+      if (summaryText) {
+        navigator.clipboard
+          .writeText(summaryText)
+          .then(() => {
+            summarizeBtn.classList.add("text-white");
+            summarizeBtn.innerText = "Copied";
+            setTimeout(() => {
+              summarizeBtn.classList.add("text-white");
+              summarizeBtn.innerHTML = `${copyIcon()} Copy`;
+            }, 2000);
+          })
+          .catch((error) => {
+            console.error("Error copying text: ", error);
+          });
+      }
+    } else {
+      summarizeBtn.disabled = true;
+      summarizeBtn.classList.add("text-white");
+      summarizeBtn.innerText = "Loading...";
+      const videoUrl = videoDetails.videoUrl;
+
+      fetchData(videoUrl, summarizeBtn, summaryResult);
+    }
+  });
+}
+
+function fetchData(videoUrl, summarizeBtn, summaryResult) {
   const summaryField = document.getElementById("summaryField");
 
   fetch("http://localhost:3030/api/summarize", {
@@ -50,7 +56,7 @@ function fetchData(videoTitle, videoUrl, summarizeBtn, summaryResult) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      title: videoTitle,
+      title: '',
       videoUrl: videoUrl,
     }),
   })

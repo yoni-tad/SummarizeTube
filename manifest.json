@@ -3,10 +3,10 @@
   "name": "SummarizeTube",
   "version": "1.0.0",
   "description": "Summarize YouTube videos with a single click.",
+  "permissions": ["sidePanel", "tabs", "storage"],
   "background": {
     "service_worker": "src/background.js"
   },
-  "permissions": ["sidePanel", "tabs", "storage"],
   "commands": {
     "_execute_action": {
       "suggested_key": {
@@ -29,7 +29,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.youtube.com/watch*"],
+      "matches": ["https://www.youtube.com/*"],
       "js": ["src/content.js"]
     }
   ]
